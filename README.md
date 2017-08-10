@@ -10,10 +10,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-To use the API, you must, first of all, have Yo! Payments Business Account. The API is not available for Personal Accounts
+To use the API, you must, first of all, have a Yo! Payments Business Account. The API is not available for Personal Accounts
 
-Yo! Payments API Username
-Yo! Payments API Password
+* Yo! Payments API Username
+* Yo! Payments API Password
 
 ```
 $yoAPI = new YoAPI($username, $password);
@@ -21,23 +21,16 @@ $yoAPI = new YoAPI($username, $password);
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+Download the YoAPI.php file and include it in your PHP script.
 
 ```
-Give the example
+require 'YoAPI.php';
 ```
 
-And repeat
+And that's it! You now have access to the library functions and can make mobile money payments programatically!
 
-```
-until finished
-```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
+## Examples
 
 Explain how to run the automated tests for this system
 
