@@ -6,8 +6,6 @@ Yo! Payments API PHP Library is a PHP library that can be included in your PHP p
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
 To use the API, you must, first of all, have a Yo! Payments Business Account. The API is not available for Personal Accounts
@@ -27,27 +25,42 @@ Download the YoAPI.php file and include it in your PHP script.
 require 'YoAPI.php';
 ```
 
+Initialize the library
+
+```
+$yoAPI = new YoAPI($username, $password);
+```
+
 And that's it! You now have access to the library functions and can make mobile money payments programatically!
 
 
 ## Examples
 
-Explain how to run the automated tests for this system
+The library can be used to:
 
-### Break down into end to end tests
+* Request Mobile Money User to deposit funds into your account
+* Check the status of a mobile money transaction.
+* Transfer funds from your Payment Account to another Yo! Payments Account
+* Get the current balance of your Yo! Payments Account
+* Get a ministatement of activity on your Yo! Payments Account
+* Send airtime to a mobile phone user
+* Send airtime from your Yo! Payments account to another Yo! Payments user account
 
-Explain what these tests test and why
+### Deposit Funds
+
+Request Mobile Money User to deposit funds into your account. This will return a PHP array with keys:
+
+* Status
+* StatusCode
+* StatusMessage
+* TransactionStatus
 
 ```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
+$yoAPI = new YoAPI($this->username, $this->password);
+$response = $yoAPI->ac_deposit_funds('256770000000', 10000, 'Reason for transfer of funds');
+if($response['Status']=='OK'){
+	// Transaction was successful and funds were deposited onto your account
+}
 ```
 
 ## Deployment
