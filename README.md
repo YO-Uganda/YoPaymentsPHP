@@ -34,26 +34,9 @@ $yoAPI = new YoAPI($username, $password);
 And that's it! You now have access to the library functions and can make mobile money payments programatically!
 
 
-## Examples
+## A Simple Example
 
-The library can be used to:
-
-* Request Mobile Money User to deposit funds into your account
-* Check the status of a mobile money transaction.
-* Transfer funds from your Payment Account to another Yo! Payments Account
-* Get the current balance of your Yo! Payments Account
-* Get a ministatement of activity on your Yo! Payments Account
-* Send airtime to a mobile phone user
-* Send airtime from your Yo! Payments account to another Yo! Payments user account
-
-### Deposit Funds
-
-Request Mobile Money User to deposit funds into your account. This will return a PHP array with keys:
-
-* Status
-* StatusCode
-* StatusMessage
-* TransactionStatus
+Start the Mobile Money User to Prompt for PIN to transfer funds
 
 ```
 $yoAPI = new YoAPI($this->username, $this->password);
@@ -63,9 +46,9 @@ if($response['Status']=='OK'){
 }
 ```
 
-## Deployment
+You'll find plenty more to play with in the [examples](https://github.com/YO-Uganda) folder.
 
-Add additional notes about how to deploy this on a live system
+That's it! You should now be ready to use YoAPI
 
 ## Built With
 
