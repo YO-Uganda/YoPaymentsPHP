@@ -39,10 +39,36 @@ And that's it! You now have access to the library functions and can make mobile 
 Start the Mobile Money User to Prompt for PIN to transfer funds
 
 ```
-$yoAPI = new YoAPI($this->username, $this->password);
+$yoAPI = new YoAPI($username, $password);
 $response = $yoAPI->ac_deposit_funds('256770000000', 10000, 'Reason for transfer of funds');
 if($response['Status']=='OK'){
 	// Transaction was successful and funds were deposited onto your account
+	echo "Transaction Reference = ".$response['TransactionReference'];
+}
+```
+Receive payment notification when payment completed.
+
+```
+$yoAPI = new YoAPI($username, $password);
+if(isset($_POST)){
+	$response = $yoAPI->receive_payment_notification();
+	if($response['is_verified']){
+		// Notification is from Yo! Uganda Limited
+		echo "Payment from ".$response['msisdn']." on ".$response['date_time']." for ".$response['narrative']." with an amount of ".$response['amount'].". Mobile Network Reference = ".$response['network_ref']." and external reference of ".$response['external_ref'];
+	}
+}
+```
+
+Receive notification when payment has failed.
+
+```
+$yoAPI = new YoAPI($username, $password);
+if(isset($_POST)){
+	$response = $yoAPI->receive_payment_failure_notification();
+	if($response['is_verified']){
+		// Notification is from Yo! Uganda Limited
+		echo "Payment on ".$response['transaction_init_date']." with a FAILED transaction status ".$response['failed_transaction_reference']." closed.";
+	}
 }
 ```
 

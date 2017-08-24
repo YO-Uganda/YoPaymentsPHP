@@ -123,6 +123,8 @@ class YoAPI {
      */
     private $YOURL = "https://paymentsapi1.yo.co.ug/ybs/task.php";
 
+    private $public_key_file = "Yo_Uganda_Public_Certificate.crt";
+
     /**
      * YoAPI constructor.
      * @param string $username
@@ -837,23 +839,105 @@ class YoAPI {
         // To be done later
     }
 
+    public function receive_payment_notification()
+    {
+        $verification_status = false;
+        
+        if($this->verify_payment_notification()){
+            $verification_status = true;
+        }
+
+        return array(
+            'is_verified' => $verification_status,
+            'date_time' => $_POST['date_time'],
+            'amount' => $_POST['amount'],
+            'narrative' => $_POST['narrative'],
+            'network_ref' => $_POST['network_ref'],
+            'external_ref' => $_POST['external_ref'],
+            'msisdn' => $_POST['msisdn']
+        );
+    }
+
+    public function receive_payment_failure_notification()
+    {
+        $verification_status = false;
+        
+        if($this->verify_payment_failure_notification()){
+            $verification_status = true;
+        }
+        
+        return array(
+            'is_verified' => $verification_status,
+            'failed_transaction_reference' => $_POST['failed_transaction_reference'],
+            'transaction_init_date' => $_POST['transaction_init_date']
+        );
+    }
+
     protected function get_xml_response($xml)
     {
-    	$soap_do = curl_init();
-		curl_setopt($soap_do, CURLOPT_URL, $this->YOURL);
-		curl_setopt($soap_do, CURLOPT_CONNECTTIMEOUT, 120);
-		curl_setopt($soap_do, CURLOPT_TIMEOUT, 120);
-		curl_setopt($soap_do, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($soap_do, CURLOPT_POST, true);
-		curl_setopt($soap_do, CURLOPT_POSTFIELDS, $xml);
-		curl_setopt($soap_do, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($soap_do, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt($soap_do, CURLOPT_VERBOSE, false);
-		curl_setopt($soap_do, CURLOPT_HTTPHEADER, array('Content-Type: text/xml','Content-transfer-encoding: text','Content-Length: '.strlen($xml)));
+        $soap_do = curl_init();
+        curl_setopt($soap_do, CURLOPT_URL, $this->YOURL);
+        curl_setopt($soap_do, CURLOPT_CONNECTTIMEOUT, 120);
+        curl_setopt($soap_do, CURLOPT_TIMEOUT, 120);
+        curl_setopt($soap_do, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($soap_do, CURLOPT_POST, true);
+        curl_setopt($soap_do, CURLOPT_POSTFIELDS, $xml);
+        curl_setopt($soap_do, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($soap_do, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($soap_do, CURLOPT_VERBOSE, false);
+        curl_setopt($soap_do, CURLOPT_HTTPHEADER, array('Content-Type: text/xml','Content-transfer-encoding: text','Content-Length: '.strlen($xml)));
 
-		$xml_response = curl_exec($soap_do);
-		curl_close($soap_do);
+        $xml_response = curl_exec($soap_do);
+        curl_close($soap_do);
 
-		return $xml_response;
+        return $xml_response;
+    }
+
+    protected function verify_payment_notification()
+    {
+        $post_data = file_get_contents('php://input');
+        $data = $_POST['date_time'].$_POST['amount'].$_POST['narrative'].$_POST['network_ref'].$_POST['external_ref'].$_POST['msisdn'];
+
+        $signature = base64_decode($_POST['signature']);
+        $fh = fopen($this->public_key_file, 'r');
+        if($fh === FALSE) {
+            return false;
+        }
+
+        $key = fread($fh, 8192);
+        fclose($fh);
+        $key_id = openssl_pkey_get_public($key);
+        $verified = openssl_verify($data, $signature, $key_id);
+        openssl_free_key($key_id);
+
+        if($verified == 1){
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function verify_payment_failure_notification()
+    {
+       $post_data = file_get_contents('php://input');
+        $data = $_POST['failed_transaction_reference'].$_POST['transaction_init_date'];
+
+        $signature = base64_decode($_POST['verification']);
+        $fh = fopen($this->public_key_file, 'r');
+        if($fh === FALSE) {
+            return false;
+        }
+
+        $key = fread($fh, 8192);
+        fclose($fh);
+        $key_id = openssl_pkey_get_public($key);
+        $verified = openssl_verify($data, $signature, $key_id);
+        openssl_free_key($key_id);
+
+        if($verified == 1){
+            return true;
+        }
+
+        return false; 
     }
 }
