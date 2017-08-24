@@ -40,6 +40,7 @@ Start the Mobile Money User to Prompt for PIN to transfer funds
 
 ```
 $yoAPI = new YoAPI($username, $password);
+$yoAPI->set_nonblocking("TRUE");
 $response = $yoAPI->ac_deposit_funds('256770000000', 10000, 'Reason for transfer of funds');
 if($response['Status']=='OK'){
 	// Transaction was successful and funds were deposited onto your account

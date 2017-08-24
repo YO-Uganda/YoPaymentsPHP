@@ -28,7 +28,7 @@ $yoAPI->set_failure_notification_url('example.com/fpn.php');
 $response = $yoAPI->ac_deposit_funds('256770000000', 1000, 'Reason for transfer of funds');
 
 if($response['Status']=='OK'){
-	echo "Payment made! Funds have been deposited onto your account. Transaction Reference = ".$response['TransactionReference'].". Thank you for using Yo! Payments";
+	echo "Waiting for user to confirm mobile money transfer. You can check using this Transaction Reference = ".$response['TransactionReference'].". Thank you for using Yo! Payments";
 
 	// Save this transaction for future reference
 }else{
