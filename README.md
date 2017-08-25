@@ -19,19 +19,32 @@ $yoAPI = new YoAPI($username, $password);
 
 ### Installing
 
-Download the YoAPI.php file and include it in your PHP script.
+Yo! Payments API PHP Library is available via [Composer/Packagist](https://packagist.org/packages/yo-uganda/yopaymentsphp) (using semantic versioning), so just add this line to your ```composer.json``` file
 
 ```
-require 'YoAPI.php';
+"yo-uganda/yopaymentsphp": "^1.0" 
 ```
-
-Initialize the library
+or
 
 ```
-$yoAPI = new YoAPI($username, $password);
+composer require yo-uganda/yopaymentsphp
 ```
+Then inside your PHP script, add the line
 
-And that's it! You now have access to the library functions and can make mobile money payments programatically!
+```
+require 'vendor/autoload.php';
+```
+And voila! The Yo! Payments PHP API is now available for use.
+
+Alternatively, copy the contents of the YoPaymentsPHP folder into one of the ```include_path``` directories specified in your PHP configuration.
+
+If you don't use git, click the 'zip' button at the top of the page in GitHub.
+
+### Minimal Installation
+
+While installing the entire package manually or with composer is simple, convenient and reliable, you may want to include only vital files in your project. At the very least you'll need [YoAPI.php](YoAPI.php). If you are doing Instant Payment Notifications, then you'll also require [Yo_Uganda_Public_Certificate.crt](Yo_Uganda_Public_Certificate.crt).
+
+You can then load the library by just ```require '/path/to/YoAPI.php';``` and everything should work.
 
 
 ## A Simple Example
