@@ -358,24 +358,24 @@ class YoAPI {
         $response = $simpleXMLObject->Response;
 
 		$result = array();
-		$result['Status'] = $response->Status;
-		$result['StatusCode'] = $response->StatusCode;
-		$result['StatusMessage'] = $response->StatusMessage;
-		$result['TransactionStatus'] = $response->TransactionStatus;
+		$result['Status'] = (string) $response->Status;
+		$result['StatusCode'] = (string) $response->StatusCode;
+		$result['StatusMessage'] = (string) $response->StatusMessage;
+		$result['TransactionStatus'] = (string) $response->TransactionStatus;
 		if (!empty($response->ErrorMessageCode)) {
-			$result['ErrorMessageCode'] = $response->ErrorMessageCode;
+			$result['ErrorMessageCode'] = (string) $response->ErrorMessageCode;
 		}
 		if (!empty($response->ErrorMessage)) {
-			$result['ErrorMessage'] = $response->ErrorMessage;
+			$result['ErrorMessage'] = (string) $response->ErrorMessage;
 		}
 		if (!empty($response->TransactionReference)) {
-			$result['TransactionReference'] = $response->TransactionReference;
+			$result['TransactionReference'] = (string) $response->TransactionReference;
 		}
 		if (!empty($response->MNOTransactionReferenceId)) {
-			$result['MNOTransactionReferenceId'] = $response->MNOTransactionReferenceId;
+			$result['MNOTransactionReferenceId'] = (string) $response->MNOTransactionReferenceId;
 		}
 		if (!empty($response->IssuedReceiptNumber)) {
-			$result['IssuedReceiptNumber'] = $response->IssuedReceiptNumber;
+			$result['IssuedReceiptNumber'] = (string) $response->IssuedReceiptNumber;
 		}
 
 		return $result;
@@ -411,39 +411,39 @@ class YoAPI {
         $response = $simpleXMLObject->Response;
 
 		$result = array();
-		$result['Status'] = $response->Status;
-		$result['StatusCode'] = $response->StatusCode;
-		$result['StatusMessage'] = $response->StatusMessage;
-		$result['TransactionStatus'] = $response->TransactionStatus;
+		$result['Status'] = (string) $response->Status;
+		$result['StatusCode'] = (string) $response->StatusCode;
+		$result['StatusMessage'] = (string) $response->StatusMessage;
+		$result['TransactionStatus'] = (string) $response->TransactionStatus;
 		if (!empty($response->ErrorMessageCode)) {
-			$result['ErrorMessageCode'] = $response->ErrorMessageCode;
+			$result['ErrorMessageCode'] = (string) $response->ErrorMessageCode;
 		}
 		if (!empty($response->ErrorMessage)) {
-			$result['ErrorMessage'] = $response->ErrorMessage;
+			$result['ErrorMessage'] = (string) $response->ErrorMessage;
 		}
 		if (!empty($response->TransactionReference)) {
-			$result['TransactionReference'] = $response->TransactionReference;
+			$result['TransactionReference'] = (string) $response->TransactionReference;
 		}
 		if (!empty($response->MNOTransactionReferenceId)) {
-			$result['MNOTransactionReferenceId'] = $response->MNOTransactionReferenceId;
+			$result['MNOTransactionReferenceId'] = (string) $response->MNOTransactionReferenceId;
 		}
 		if (!empty($response->Amount)) {
-			$result['Amount'] = $response->Amount;
+			$result['Amount'] = (string) $response->Amount;
 		}
 		if (!empty($response->AmountFormatted)) {
-			$result['AmountFormatted'] = $response->AmountFormatted;
+			$result['AmountFormatted'] = (string) $response->AmountFormatted;
 		}
 		if (!empty($response->CurrencyCode)) {
-			$result['CurrencyCode'] = $response->CurrencyCode;
+			$result['CurrencyCode'] = (string) $response->CurrencyCode;
 		}
 		if (!empty($response->TransactionInitiationDate)) {
-			$result['TransactionInitiationDate'] = $response->TransactionInitiationDate;
+			$result['TransactionInitiationDate'] = (string) $response->TransactionInitiationDate;
 		}
 		if (!empty($response->TransactionCompletionDate)) {
-			$result['TransactionCompletionDate'] = $response->TransactionCompletionDate;
+			$result['TransactionCompletionDate'] = (string) $response->TransactionCompletionDate;
 		}
 		if (!empty($response->IssuedReceiptNumber)) {
-			$result['IssuedReceiptNumber'] = $response->IssuedReceiptNumber;
+			$result['IssuedReceiptNumber'] = (string) $response->IssuedReceiptNumber;
 		}
 
 		return $result;
@@ -493,24 +493,24 @@ class YoAPI {
         $response = $simpleXMLObject->Response;
 
 		$result = array();
-		$result['Status'] = $response->Status;
-		$result['StatusCode'] = $response->StatusCode;
-		$result['StatusMessage'] = $response->StatusMessage;
-		$result['TransactionStatus'] = $response->TransactionStatus;
+		$result['Status'] = (string) $response->Status;
+		$result['StatusCode'] = (string) $response->StatusCode;
+		$result['StatusMessage'] = (string) $response->StatusMessage;
+		$result['TransactionStatus'] = (string) $response->TransactionStatus;
 		if (!empty($response->ErrorMessageCode)) {
-			$result['ErrorMessageCode'] = $response->ErrorMessageCode;
+			$result['ErrorMessageCode'] = (string) $response->ErrorMessageCode;
 		}
 		if (!empty($response->ErrorMessage)) {
-			$result['ErrorMessage'] = $response->ErrorMessage;
+			$result['ErrorMessage'] = (string) $response->ErrorMessage;
 		}
 		if (!empty($response->TransactionReference)) {
-			$result['TransactionReference'] = $response->TransactionReference;
+			$result['TransactionReference'] = (string) $response->TransactionReference;
 		}
 		if (!empty($response->MNOTransactionReferenceId)) {
-			$result['MNOTransactionReferenceId'] = $response->MNOTransactionReferenceId;
+			$result['MNOTransactionReferenceId'] = (string) $response->MNOTransactionReferenceId;
 		}
 		if (!empty($response->IssuedReceiptNumber)) {
-			$result['IssuedReceiptNumber'] = $response->IssuedReceiptNumber;
+			$result['IssuedReceiptNumber'] = (string) $response->IssuedReceiptNumber;
 		}
 
 		return $result;
@@ -539,18 +539,18 @@ class YoAPI {
         $response = $simpleXMLObject->Response;
 
 		$result = array();
-		$result['Status'] = $response->Status;
-		$result['StatusCode'] = $response->StatusCode;
+		$result['Status'] = (string) $response->Status;
+		$result['StatusCode'] = (string) $response->StatusCode;
 		$balances = array();
 		foreach($response->Balance->Currency as $currency){
-			$balances[] = array('code'=>$currency->Code, 'balance'=>$currency->Balance); 
+			$balances[] = array('code'=>(string) $currency->Code, 'balance'=>(string) $currency->Balance); 
 		}
 		$result['balance'] = $balances;
 		if (!empty($response->ErrorMessageCode)) {
-			$result['ErrorMessageCode'] = $response->ErrorMessageCode;
+			$result['ErrorMessageCode'] = (string) $response->ErrorMessageCode;
 		}
 		if (!empty($response->ErrorMessage)) {
-			$result['ErrorMessage'] = $response->ErrorMessage;
+			$result['ErrorMessage'] = (string) $response->ErrorMessage;
 		}
 
 		return $result;
@@ -702,24 +702,24 @@ class YoAPI {
         $response = $simpleXMLObject->Response;
 
 		$result = array();
-		$result['Status'] = $response->Status;
-		$result['StatusCode'] = $response->StatusCode;
-		$result['StatusMessage'] = $response->StatusMessage;
-		$result['TransactionStatus'] = $response->TransactionStatus;
+		$result['Status'] = (string) $response->Status;
+		$result['StatusCode'] = (string) $response->StatusCode;
+		$result['StatusMessage'] = (string) $response->StatusMessage;
+		$result['TransactionStatus'] = (string) $response->TransactionStatus;
 		if ($response->ErrorMessageCode != null) {
-			$result['ErrorMessageCode'] = $response->ErrorMessageCode;
+			$result['ErrorMessageCode'] = (string) $response->ErrorMessageCode;
 		}
 		if ($response->ErrorMessage != null) {
-			$result['ErrorMessage'] = $response->ErrorMessage;
+			$result['ErrorMessage'] = (string) $response->ErrorMessage;
 		}
 		if ($response->TransactionReference != null) {
-			$result['TransactionReference'] = $response->TransactionReference;
+			$result['TransactionReference'] = (string) $response->TransactionReference;
 		}
 		if ($response->MNOTransactionReferenceId != null) {
-			$result['MNOTransactionReferenceId'] = $response->MNOTransactionReferenceId;
+			$result['MNOTransactionReferenceId'] = (string) $response->MNOTransactionReferenceId;
 		}
 		if ($response->IssuedReceiptNumber != null) {
-			$result['IssuedReceiptNumber'] = $response->IssuedReceiptNumber;
+			$result['IssuedReceiptNumber'] = (string) $response->IssuedReceiptNumber;
 		}
 
 		return $result;
@@ -768,24 +768,24 @@ class YoAPI {
         $response = $simpleXMLObject->Response;
 
 		$result = array();
-		$result['Status'] = $response->Status;
-		$result['StatusCode'] = $response->StatusCode;
-		$result['StatusMessage'] = $response->StatusMessage;
-		$result['TransactionStatus'] = $response->TransactionStatus;
+		$result['Status'] = (string) $response->Status;
+		$result['StatusCode'] = (string) $response->StatusCode;
+		$result['StatusMessage'] = (string) $response->StatusMessage;
+		$result['TransactionStatus'] = (string) $response->TransactionStatus;
 		if ($response->ErrorMessageCode != null) {
-			$result['ErrorMessageCode'] = $response->ErrorMessageCode;
+			$result['ErrorMessageCode'] = (string) $response->ErrorMessageCode;
 		}
 		if ($response->ErrorMessage != null) {
-			$result['ErrorMessage'] = $response->ErrorMessage;
+			$result['ErrorMessage'] = (string) $response->ErrorMessage;
 		}
 		if ($response->TransactionReference != null) {
-			$result['TransactionReference'] = $response->TransactionReference;
+			$result['TransactionReference'] = (string) $response->TransactionReference;
 		}
 		if ($response->MNOTransactionReferenceId != null) {
-			$result['MNOTransactionReferenceId'] = $response->MNOTransactionReferenceId;
+			$result['MNOTransactionReferenceId'] = (string) $response->MNOTransactionReferenceId;
 		}
 		if ($response->IssuedReceiptNumber != null) {
-			$result['IssuedReceiptNumber'] = $response->IssuedReceiptNumber;
+			$result['IssuedReceiptNumber'] = (string) $response->IssuedReceiptNumber;
 		}
 
 		return $result;
@@ -813,8 +813,6 @@ class YoAPI {
 
 		$simpleXMLObject =  new SimpleXMLElement($xml_response);
         $response = $simpleXMLObject->Response;
-
-        print_r($response);
 
 		$isValid = false;
 
