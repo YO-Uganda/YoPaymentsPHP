@@ -1,0 +1,25 @@
+{
+    "name": "yo-uganda/yopaymentsphp",
+    "type": "library",
+    "description": "A PHP Library to interact with the Yo! Payments API.",
+    "keywords": ["YoPayments", "mobile money", "composer", "package"], 
+    "license": "MIT", 
+    "authors": [ 
+    	{ 
+    		"name": "Aziz Kirumira", 
+    		"email": "akirumira@yo.co.ug" 
+    	},
+    	{ 
+    		"name": "Gerald Begumisa", 
+    		"email": "gbegumisa@yo.co.ug" 
+    	} 
+    ],
+    "require": {
+        "php": "^5.3.3 || ^7.0" 	
+    },
+    "autoload": {
+        "classmap": [
+            "YoAPI.php"
+        ]
+    }
+}
