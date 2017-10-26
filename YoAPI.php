@@ -827,6 +827,67 @@ class YoAPI {
 		return $isValid;
     }
 
+    /**
+    * Withdraw funds from your YO! Payments Account to a mobile money user
+    * This transaction transfers funds from your YO! Payments Account to a mobile money user.
+    * Please handle this request with care because if compromised, it can lead to 
+    * withdrawal of funds from your account.
+    * This request is not supported by all mobile money operator networks
+    * This request requires permission that is granted by the issuance of an API Access Letter
+    * @param string $msisdn the mobile money phone number in the format 256772123456
+    * @param double $amount the amount of money to withdraw from your account (floats are supported)
+    * @param string $narrative the reason for withdrawal of funds from your account 
+    * @return array
+    */
+    public function ac_withdraw_funds($msisdn, $amount, $narrative)
+    {
+        $xml = '';
+        $xml .= '<?xml version="1.0" encoding="UTF-8"?>';
+        $xml .= '<AutoCreate>';
+        $xml .= '<Request>';
+        $xml .= '<APIUsername>'.$this->username.'</APIUsername>';
+        $xml .= '<APIPassword>'.$this->password.'</APIPassword>';
+        $xml .= '<Method>acwithdrawfunds</Method>';
+        $xml .= '<NonBlocking>'.$this->NonBlocking.'</NonBlocking>';
+        $xml .= '<Account>'.$msisdn.'</Account>';
+        $xml .= '<Amount>'.$amount.'</Amount>';
+        $xml .= '<Narrative>'.$narrative.'</Narrative>';;
+        if( $this->external_reference != NULL ){ $xml .= '<ExternalReference>'.$this->external_reference.'</ExternalReference>'; }
+        if( $this->internal_reference != NULL ) { $xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference'; }
+        if( $this->provider_reference_text != NULL ){ $xml .= '<ProviderReferenceText>'.$this->provider_reference_text.'</ProviderReferenceText>'; }
+        $xml .= '</Request>';
+        $xml .= '</AutoCreate>';
+
+        $xml_response = $this->get_xml_response($xml);
+
+        $simpleXMLObject =  new SimpleXMLElement($xml_response);
+        $response = $simpleXMLObject->Response;
+
+        $result = array();
+        $result['Status'] = (string) $response->Status;
+        $result['StatusCode'] = (string) $response->StatusCode;
+        $result['StatusMessage'] = (string) $response->StatusMessage;
+        $result['TransactionStatus'] = (string) $response->TransactionStatus;
+        if (!empty($response->ErrorMessageCode)) {
+            $result['ErrorMessageCode'] = (string) $response->ErrorMessageCode;
+        }
+        if (!empty($response->ErrorMessage)) {
+            $result['ErrorMessage'] = (string) $response->ErrorMessage;
+        }
+        if (!empty($response->TransactionReference)) {
+            $result['TransactionReference'] = (string) $response->TransactionReference;
+        }
+        if (!empty($response->MNOTransactionReferenceId)) {
+            $result['MNOTransactionReferenceId'] = (string) $response->MNOTransactionReferenceId;
+        }
+        if (!empty($response->IssuedReceiptNumber)) {
+            $result['IssuedReceiptNumber'] = (string) $response->IssuedReceiptNumber;
+        }
+
+        return $result;
+        
+    }
+
     public function ac_get_msisdn_kyc_info()
     {
         // To be done later
