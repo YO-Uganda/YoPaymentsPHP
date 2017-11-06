@@ -9,6 +9,7 @@ require './YoAPI.php';
 
 // Create a new YoAPI instance with Yo! Payments Username and Password
 $yoAPI = new YoAPI($username, $password); 
+$yoAPI->set_URL("https://41.220.12.206/services/yopaymentsdev/task.php");
 
 
 /** 
@@ -41,7 +42,7 @@ if($airtel_response['Status']=='OK'){
 }
 
 /** 
- * This returns a statement for the latest 15 transactions 
+ * This returns a statement for the latest 5 transactions 
  * (including charges)
  */
 $general_response = $yoAPI->ac_get_ministatement();

@@ -541,11 +541,16 @@ class YoAPI {
 		$result = array();
 		$result['Status'] = (string) $response->Status;
 		$result['StatusCode'] = (string) $response->StatusCode;
-		$balances = array();
-		foreach($response->Balance->Currency as $currency){
-			$balances[] = array('code'=>(string) $currency->Code, 'balance'=>(string) $currency->Balance); 
-		}
+        $balances = array();
+        if(isset($response->Balance->Currency)){
+            foreach($response->Balance->Currency as $currency){
+                $balances[] = array('code'=>(string) $currency->Code, 'balance'=>(string) $currency->Balance); 
+            }
+        }
 		$result['balance'] = $balances;
+        if (!empty($response->StatusMessage)) {
+            $result['StatusMessage'] = (string) $response->StatusMessage;
+        }
 		if (!empty($response->ErrorMessageCode)) {
 			$result['ErrorMessageCode'] = (string) $response->ErrorMessageCode;
 		}
