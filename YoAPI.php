@@ -344,7 +344,7 @@ class YoAPI {
     	$xml .= '<Amount>'.$amount.'</Amount>';
     	$xml .= '<Narrative>'.$narrative.'</Narrative>';
     	if( $this->external_reference != NULL ){ $xml .= '<ExternalReference>'.$this->external_reference.'</ExternalReference>'; }
-    	if( $this->internal_reference != NULL ) { $xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference'; }
+    	if( $this->internal_reference != NULL ) { $xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference>'; }
     	if( $this->provider_reference_text != NULL ){ $xml .= '<ProviderReferenceText>'.$this->provider_reference_text.'</ProviderReferenceText>'; }
     	if( $this->instant_notification_url != NULL ){ $xml .= '<InstantNotificationUrl>'.$this->instant_notification_url.'</InstantNotificationUrl>'; }
     	if( $this->failure_notification_url != NULL ){ $xml .= '<FailureNotificationUrl>'.$this->failure_notification_url.'</FailureNotificationUrl>'; }
@@ -479,10 +479,10 @@ class YoAPI {
     	$xml .= '<BeneficiaryEmail>'.$beneficiary_email.'</BeneficiaryEmail>';
     	$xml .= '<Narrative>'.$narrative.'</Narrative>';
     	if($this->internal_reference != NULL) { 
-    		$xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference'; 
+    		$xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference>'; 
     	}
     	if($this->external_reference != NULL) { 
-    		$xml .= '<ExternalReference>'.$this->external_reference.'</ExternalReference'; 
+    		$xml .= '<ExternalReference>'.$this->external_reference.'</ExternalReference>'; 
     	}
     	$xml .= '</Request>';
     	$xml .= '</AutoCreate>';
@@ -696,7 +696,7 @@ class YoAPI {
     	$xml .= '<Amount>'.$amount.'</Amount>';
     	$xml .= '<Narrative>'.$narrative.'</Narrative>';
     	if( $this->external_reference != NULL ){ $xml .= '<ExternalReference>'.$this->externalReference.'</ExternalReference>'; }
-    	if( $this->internal_reference != NULL ) { $xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference'; }
+    	if( $this->internal_reference != NULL ) { $xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference>'; }
     	if( $this->provider_reference_text != NULL ){ $xml .= '<ProviderReferenceText>'.$this->provider_reference_text.'</ProviderReferenceText>'; }
     	$xml .= '</Request>';
     	$xml .= '</AutoCreate>';
@@ -759,10 +759,10 @@ class YoAPI {
     	$xml .= '<BeneficiaryEmail>'.$beneficiary_email.'</BeneficiaryEmail>';
     	$xml .= '<Narrative>'.$narrative.'</Narrative>';
     	if($this->internal_reference != NULL) { 
-    		$xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference'; 
+    		$xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference>'; 
     	}
     	if($this->external_reference != NULL) { 
-    		$xml .= '<ExternalReference>'.$this->external_reference.'</ExternalReference'; 
+    		$xml .= '<ExternalReference>'.$this->external_reference.'</ExternalReference>'; 
     	}
     	$xml .= '</Request>';
     	$xml .= '</AutoCreate>';
@@ -858,7 +858,7 @@ class YoAPI {
         $xml .= '<Amount>'.$amount.'</Amount>';
         $xml .= '<Narrative>'.$narrative.'</Narrative>';;
         if( $this->external_reference != NULL ){ $xml .= '<ExternalReference>'.$this->external_reference.'</ExternalReference>'; }
-        if( $this->internal_reference != NULL ) { $xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference'; }
+        if( $this->internal_reference != NULL ) { $xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference>'; }
         if( $this->provider_reference_text != NULL ){ $xml .= '<ProviderReferenceText>'.$this->provider_reference_text.'</ProviderReferenceText>'; }
         $xml .= '</Request>';
         $xml .= '</AutoCreate>';
