@@ -188,6 +188,23 @@ class YoAPI {
     }
 
     /**
+     * Set the PUBLIC KEY PATH
+     * @param string $public_key_file_URL
+     * @return void
+    */
+    public function set_public_key_file_URL($public_key_file_URL){
+        $this->public_key_file = $public_key_file_URL;
+    }
+
+    /**
+     * Returns the PUBLIC KEY PATH
+     * @return string 
+     */
+    public function get_public_key_file_URL(){
+        return $this->public_key_file;
+    }
+
+    /**
     * Set the NonBlocking Variable
     * @param string $nonblocking TRUE for nonblocking API requests
     * @return void
