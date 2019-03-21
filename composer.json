@@ -4,6 +4,7 @@
     "description": "A PHP Library to interact with the Yo! Payments API.",
     "keywords": ["YoPayments", "mobile money", "composer", "package"], 
     "license": "MIT", 
+    "version": "1.1",
     "authors": [ 
     	{ 
     		"name": "Aziz Kirumira", 
@@ -12,7 +13,11 @@
     	{ 
     		"name": "Gerald Begumisa", 
     		"email": "gbegumisa@yo.co.ug" 
-    	} 
+    	},
+        { 
+            "name": "Ronald Sebuhinja", 
+            "email": "rsebuhinja@yo.co.ug" 
+        } 
     ],
     "require": {
         "php": "^5.3.3 || ^7.0" 	
