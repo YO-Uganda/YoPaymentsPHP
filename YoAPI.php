@@ -128,6 +128,54 @@ class YoAPI {
     private $transaction_limit_account_identifier = NULL;
 
     /**
+     * The Public Key Authentication Nonce
+     * Required if public key authentication is enabled.
+     * Contact Yo! Payments support services for clarification on the cases where this parameter
+     * is required. 
+     * Max Length: 255 charcaters
+     * Reg Expression: [a-zA-Z0-9,-+]
+     * Default: NULL
+     * It must be unique for each API request made
+     * @var string
+     */
+    private $public_key_authentication_nonce = NULL;
+
+    /**
+     * The Public Key Authentication Signature
+     * Required if public key authentication is enabled.
+     * Contact Yo! Payments support services for clarification on the cases where this parameter
+     * is required. 
+     * Max Length: 4096 charcaters
+     * Reg Expression: [a-zA-Z0-9,-+]
+     * Default: NULL
+     * 1. It must be a concatenation of the parameters below in the indicated order:
+     * * API Username
+     * * Amount
+     * * Account
+     * * Narrative
+     * * External Reference
+     * * PublicKeyAuthenticationNonce
+     * 2. The above concatenated string in 1 should be SHA1 hashed
+     * 3. The SHA1 hash should be RSA signed using the private key associated with your public key
+     * 4. Base64-encode the RSA signature calculated in 3 above
+     * @var string
+     */
+    private $public_key_authentication_signature_base64 = NULL;
+
+    /**
+     * The location of the private key used to sign the public auth key
+     * Required if public key authentication is enabled.
+     * Contact Yo! Payments support services for clarification on the cases where this parameter
+     * is required. 
+     * Max Length: 255 charcaters
+     * Reg Expression: [a-zA-Z0-9,-+]
+     * Default: NULL
+     * It must be unique for each API request made
+     * @var string
+     */
+    private $private_key_file_location = NULL;
+
+    /**
      * YoAPI constructor.
      * @param string $username
      * @param string $password
@@ -356,6 +404,66 @@ class YoAPI {
     public function get_transaction_limit_account_identifier()
     {
        return $this->transaction_limit_account_identifier; 
+    }
+
+    /**
+    * Set the Public key authentication nonce
+    * Refer to your account administrator for using this feature
+    * @param string $public_key_authentication_nonce 
+    * @return void
+    */
+    public function set_public_key_authentication_nonce($public_key_authentication_nonce)
+    {
+        $this->public_key_authentication_nonce = $public_key_authentication_nonce;
+    }
+
+    /**
+     * Returns the Public Key Authentication Nonce Variable
+     * @return string 
+     */
+    public function get_public_key_authentication_nonce()
+    {
+        return $this->public_key_authentication_nonce;
+    }
+
+    /**
+    * Set the Public Key Authentication Base64-Encoded Signature
+    * Refer to your account administrator for using this feature
+    * @param string $public_key_authentication_signature_base64 
+    * @return void
+    */
+    public function set_public_key_authentication_signature_base64($public_key_authentication_signature_base64)
+    {
+        $this->public_key_authentication_signature_base64 = $public_key_authentication_signature_base64;
+    }
+
+    /**
+     * Returns the Public Key Authentication Base64-Encoded Signature Variable
+     * @return string 
+     */
+    public function get_public_key_authentication_signature_base64()
+    {
+        return $this->public_key_authentication_signature_base64;
+    }
+
+    /**
+    * Set the Private Key File Variable
+    * Refer to your account administrator for using this feature
+    * @param string $private_key_file_location 
+    * @return void
+    */
+    public function set_private_key_file_location($private_key_file_location)
+    {
+        $this->private_key_file_location = $private_key_file_location;
+    }
+
+    /**
+     * Returns the Private Key File Variable
+     * @return string 
+     */
+    public function get_private_key_file_location()
+    {
+        return $this->private_key_file_location;
     }
 
     /**
@@ -860,11 +968,13 @@ class YoAPI {
         $xml .= '<NonBlocking>'.$this->NonBlocking.'</NonBlocking>';
         $xml .= '<Account>'.$msisdn.'</Account>';
         $xml .= '<Amount>'.$amount.'</Amount>';
-        $xml .= '<Narrative>'.$narrative.'</Narrative>';;
+        $xml .= '<Narrative>'.$narrative.'</Narrative>';
         if( $this->external_reference != NULL ){ $xml .= '<ExternalReference>'.$this->external_reference.'</ExternalReference>'; }
         if( $this->internal_reference != NULL ) { $xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference>'; }
         if( $this->provider_reference_text != NULL ){ $xml .= '<ProviderReferenceText>'.$this->provider_reference_text.'</ProviderReferenceText>'; }
         if( $this->transaction_limit_account_identifier != NULL ){ $xml .= '<TransactionLimitAccountIdentifier>'.$this->transaction_limit_account_identifier.'</TransactionLimitAccountIdentifier>';}
+        if( $this->public_key_authentication_nonce != NULL ){ $xml .= '<PublicKeyAuthenticationNonce>'.$this->public_key_authentication_nonce.'</PublicKeyAuthenticationNonce>';}
+        if( $this->public_key_authentication_signature_base64 != NULL ){ $xml .= '<PublicKeyAuthenticationSignatureBase64>'.$this->public_key_authentication_signature_base64.'</PublicKeyAuthenticationSignatureBase64>';}
         $xml .= '</Request>';
         $xml .= '</AutoCreate>';
 
@@ -1036,6 +1146,43 @@ class YoAPI {
             'failed_transaction_reference' => $_POST['failed_transaction_reference'],
             'transaction_init_date' => $_POST['transaction_init_date']
         );
+    }
+
+    public function generate_public_key_authentication_signature($msisdn, $amount, $narrative)
+    {
+        if($this->public_key_authentication_nonce==NULL){
+            throw new Exception('Public key authentication nonce is not set. Please set it to continue');
+        }
+
+        if($this->private_key_file_location==NULL){
+            throw new Exception('Private key file location cannot be NULL');
+        }
+        
+        $fh = fopen($this->private_key_file_location, 'r');
+        if($fh === FALSE) {
+            throw new Exception('Private key file could not be opened. Confirm your file location '.$this->private_key_file_location);
+        }
+
+        $private_key = fread($fh, 8192);
+        fclose($fh);
+
+        $pkeyid = openssl_pkey_get_private($private_key);
+
+        if(is_bool($pkeyid)) {
+            throw new Exception('Private key is invalid');
+        }
+
+        $data = $this->username . $amount . $msisdn . $narrative . $this->external_reference . $this->public_key_authentication_nonce;
+
+        $sha1_ = sha1($data);
+
+        openssl_sign(sha1($data), $signature, $pkeyid, 'sha1WithRSAEncryption');
+
+        $signature_base64 = base64_encode($signature);
+
+        openssl_free_key($pkeyid);
+
+        $this->public_key_authentication_signature_base64 = $signature_base64;
     }
 
     protected function get_xml_response($xml)
