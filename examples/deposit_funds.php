@@ -7,7 +7,11 @@
 require './YoAPI.php';
 
 // Create a new YoAPI instance with Yo! Payments Username and Password
-$yoAPI = new YoAPI($username, $password); 
+//Set below variables to your Yo! Payments username and password accordingly
+$username = "";
+$password = "";
+$mode = "sandbox";//In production, set this to "production"
+$yoAPI = new YoAPI($username, $password, $mode);
 
 // Create a unique transaction reference that you will reference this payment with
 $transaction_reference = date("YmdHis").rand(1,100);

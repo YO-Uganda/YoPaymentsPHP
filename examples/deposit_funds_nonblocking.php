@@ -8,7 +8,11 @@
 require './YoAPI.php';
 
 // Create a new YoAPI instance with Yo! Payments Username and Password
-$yoAPI = new YoAPI($username, $password); 
+//Set below variables to your Yo! Payments username and password accordingly
+$username = "";
+$password = "";
+$mode = "sandbox";//In production, set this to "production"
+$yoAPI = new YoAPI($username, $password, $mode);
 
 // Create a unique transaction reference that you will reference this payment with
 $transaction_reference = date("YmdHis").rand(1,100);
@@ -27,7 +31,7 @@ $yoAPI->set_failure_notification_url('example.com/fpn.php');
 
 $response = $yoAPI->ac_deposit_funds('256770000000', 1000, 'Reason for transfer of funds');
 
-if($response['Status']=='OK'){
+if($response['Status']=='OK') {
 	echo "Waiting for user to confirm mobile money transfer. You can check using this Transaction Reference = ".$response['TransactionReference'].". Thank you for using Yo! Payments";
 
 	// Save this transaction for future reference
@@ -35,9 +39,12 @@ if($response['Status']=='OK'){
 	echo "Yo Payments Error: ".$response['StatusMessage'];
 }
 
-function check_transaction($transaction_reference){
+function check_transaction($transaction_reference)
+{
+	global $yoAPI;
+
 	$transaction = $yoAPI->ac_transaction_check_status($transaction_reference);
-	if($transaction['TransactionStatus']=='SUCCEEDED'){
+	if(strcmp($transaction['TransactionStatus'],'SUCCEEDED')==0){
 		// Transaction was completed and funds were deposited onto the account
 		// Save data into the database
 	}else{
