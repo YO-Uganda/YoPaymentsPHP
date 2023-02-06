@@ -1,6 +1,7 @@
 <?php
 
 class YoAPI {
+
     /**
      * The Yo! Payments API Username
      * Required.
@@ -118,13 +119,29 @@ class YoAPI {
      * Options: 
      * * "https://paymentsapi1.yo.co.ug/ybs/task.php", 
      * * "https://paymentsapi2.yo.co.ug/ybs/task.php",
-     * * "https://41.220.12.206/services/yopaymentsdev/task.php" For Sandbox tests
+     * * "https://sandbox.yo.co.ug/services/yopaymentsdev/task.php" For Sandbox tests
      * @var string
      */
     private $YOURL = "https://paymentsapi1.yo.co.ug/ybs/task.php";
 
+    /*
+    * This is the sandbox API URL
+    */
+    private $sandbox_url = "https://sandbox.yo.co.ug/services/yopaymentsdev/task.php";
+
+    /*
+    * This is the production URL
+    */
+    private $production_url = "https://paymentsapi1.yo.co.ug/ybs/task.php";
+
+    /*
+    * This is the certificate file. Should be in the same 
+    * directory as this Lib file.
+    */
     private $public_key_file = "Yo_Uganda_Public_Certificate.crt";
 
+
+    
     private $transaction_limit_account_identifier = NULL;
 
     /**
@@ -175,16 +192,28 @@ class YoAPI {
      */
     private $private_key_file_location = NULL;
 
+    /*
+    * Set this to sandbox if you are working with sandbox.
+    */
+    private $mode = "production";
+
+
     /**
      * YoAPI constructor.
      * @param string $username
      * @param string $password
      */
-    public function __construct($username, $password)
+    public function __construct($username, $password, $mode="production")
     {
         $this->username = $username;
         $this->password = $password;
-    }
+
+        if (strcmp($mode, "sandbox")==0) {
+            $this->YOURL = $this->sandbox_url;
+        } else {
+            $this->YOURL = $this->production_url;
+        }
+     }
 
     /**
     * Set the API Username
@@ -843,7 +872,7 @@ class YoAPI {
         $xml .= '<Account>'.$msisdn.'</Account>';
         $xml .= '<Amount>'.$amount.'</Amount>';
         $xml .= '<Narrative>'.$narrative.'</Narrative>';
-        if( $this->external_reference != NULL ){ $xml .= '<ExternalReference>'.$this->externalReference.'</ExternalReference>'; }
+        if( $this->external_reference != NULL ){ $xml .= '<ExternalReference>'.$this->external_reference.'</ExternalReference>'; }
         if( $this->internal_reference != NULL ) { $xml .= '<InternalReference>'.$this->internal_reference.'</InternalReference>'; }
         if( $this->provider_reference_text != NULL ){ $xml .= '<ProviderReferenceText>'.$this->provider_reference_text.'</ProviderReferenceText>'; }
         $xml .= '</Request>';

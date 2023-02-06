@@ -8,7 +8,11 @@
 require './YoAPI.php';
 
 if(isset($_POST)){
-	$yoAPI = new YoAPI($username, $password);
+	//Set below variables to your Yo! Payments username and password accordingly
+	$username = "";
+	$password = "";
+	$mode = "sandbox";//In production, set this to "production"
+	$yoAPI = new YoAPI($username, $password, $mode);
 	$response = $yoAPI->receive_payment_failure_notification();
 	if($response['is_verified']){
 		// Notification is from Yo! Uganda Limited
