@@ -52,7 +52,8 @@ You can then load the library by just ```require '/path/to/YoAPI.php';``` and ev
 Start the Mobile Money User to Prompt for PIN to transfer funds
 
 ```
-$yoAPI = new YoAPI($username, $password);
+$mode = "sandbox";//For production, set this to production
+$yoAPI = new YoAPI($username, $password, $mode);
 $yoAPI->set_nonblocking("TRUE");
 $response = $yoAPI->ac_deposit_funds('256770000000', 10000, 'Reason for transfer of funds');
 if($response['Status']=='OK'){
@@ -63,7 +64,8 @@ if($response['Status']=='OK'){
 Receive payment notification when payment completed.
 
 ```
-$yoAPI = new YoAPI($username, $password);
+$mode = "sandbox";//For production, set this to production
+$yoAPI = new YoAPI($username, $password, $mode);
 if(isset($_POST)){
 	$response = $yoAPI->receive_payment_notification();
 	if($response['is_verified']){
@@ -76,7 +78,8 @@ if(isset($_POST)){
 Receive notification when payment has failed.
 
 ```
-$yoAPI = new YoAPI($username, $password);
+$mode = "sandbox";//For production, set this to production
+$yoAPI = new YoAPI($username, $password, $mode);
 if(isset($_POST)){
 	$response = $yoAPI->receive_payment_failure_notification();
 	if($response['is_verified']){
