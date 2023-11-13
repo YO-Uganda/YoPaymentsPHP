@@ -221,10 +221,10 @@ class YoAPI {
 
         if (strcmp($mode, "sandbox")==0) {
             $this->YOURL = $this->sandbox_url;
-            $this->public_key_file = $this->public_key_file_for_sandbox;
+            $this->public_key_file = __DIR__.DIRECTORY_SEPARATOR.$this->public_key_file_for_sandbox;
         } else {
             $this->YOURL = $this->production_url;
-            $this->public_key_file = $this->public_key_file_for_production;
+            $this->public_key_file = __DIR__.DIRECTORY_SEPARATOR.$this->public_key_file_for_production;
         }
      }
 
