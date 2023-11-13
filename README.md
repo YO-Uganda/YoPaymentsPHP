@@ -42,7 +42,7 @@ If you don't use git, click the 'zip' button at the top of the page in GitHub.
 
 ### Minimal Installation
 
-While installing the entire package manually or with composer is simple, convenient and reliable, you may want to include only vital files in your project. At the very least you'll need [YoAPI.php](YoAPI.php). If you are doing Instant Payment Notifications, then you'll also require [Yo_Uganda_Public_Certificate.crt](Yo_Uganda_Public_Certificate.crt).
+While installing the entire package manually or with composer is simple, convenient and reliable, you may want to include only vital files in your project. At the very least you'll need [YoAPI.php](YoAPI.php). If you are doing Instant Payment Notifications, then you'll also require [Yo_Uganda_Public_Certificate.crt](Yo_Uganda_Public_Certificate.crt) for production and [Yo_Uganda_Public_Sandbox_Certificate.crt](Yo_Uganda_Public_Certificate.crt) for the Sandbox.
 
 You can then load the library by just ```require '/path/to/YoAPI.php';``` and everything should work.
 
@@ -52,8 +52,7 @@ You can then load the library by just ```require '/path/to/YoAPI.php';``` and ev
 Start the Mobile Money User to Prompt for PIN to transfer funds
 
 ```
-$mode = "sandbox";//For production, set this to production
-$yoAPI = new YoAPI($username, $password, $mode);
+$yoAPI = new YoAPI($username, $password);
 $yoAPI->set_nonblocking("TRUE");
 $response = $yoAPI->ac_deposit_funds('256770000000', 10000, 'Reason for transfer of funds');
 if($response['Status']=='OK'){
@@ -64,8 +63,7 @@ if($response['Status']=='OK'){
 Receive payment notification when payment completed.
 
 ```
-$mode = "sandbox";//For production, set this to production
-$yoAPI = new YoAPI($username, $password, $mode);
+$yoAPI = new YoAPI($username, $password);
 if(isset($_POST)){
 	$response = $yoAPI->receive_payment_notification();
 	if($response['is_verified']){
@@ -78,8 +76,7 @@ if(isset($_POST)){
 Receive notification when payment has failed.
 
 ```
-$mode = "sandbox";//For production, set this to production
-$yoAPI = new YoAPI($username, $password, $mode);
+$yoAPI = new YoAPI($username, $password);
 if(isset($_POST)){
 	$response = $yoAPI->receive_payment_failure_notification();
 	if($response['is_verified']){

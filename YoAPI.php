@@ -141,6 +141,17 @@ class YoAPI {
     private $public_key_file = "Yo_Uganda_Public_Certificate.crt";
 
 
+    /*
+    * This is the certificate file to use in verifying the signature from Sandbox IPNs
+    */
+    private $public_key_file_for_sandbox = "Yo_Uganda_Public_Sandbox_Certificate.crt";
+
+    /*
+    * This is the certificate file to use in verifying the signature from Production IPNs
+    */
+    private $public_key_file_for_production = "Yo_Uganda_Public_Certificate.crt";
+
+
     
     private $transaction_limit_account_identifier = NULL;
 
@@ -210,8 +221,10 @@ class YoAPI {
 
         if (strcmp($mode, "sandbox")==0) {
             $this->YOURL = $this->sandbox_url;
+            $this->public_key_file = $this->public_key_file_for_sandbox;
         } else {
             $this->YOURL = $this->production_url;
+            $this->public_key_file = $this->public_key_file_for_production;
         }
      }
 
